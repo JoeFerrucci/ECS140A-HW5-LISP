@@ -1,4 +1,4 @@
-;; Dribble of #<io terminal-stream> started on 2014-11-11 21:45:23.
+;; Dribble of #<io terminal-stream> started on 2014-11-13 13:08:23.
 
           BEGIN TESTING
 
@@ -57,31 +57,31 @@ testing:  (double-fun 'a)
 value:    nil
 
 testing:  (double-fun '(44))
-value:    nil
+value:    (44 44)
 
 testing:  (double-fun '(44 55))
-value:    nil
+value:    (44 44 55 55)
 
 testing:  (double-fun '(1 2 3))
-value:    nil
+value:    (1 1 2 2 3 3)
 
 testing:  (double-fun '(11 12 13 14))
-value:    nil
+value:    (11 11 12 12 13 13 14 14)
 
 testing:  (double-fun '(1 (2 3) 4))
-value:    nil
+value:    (1 1 (2 3) (2 3) 4 4)
 
 testing:  (double-fun '(1 (2) (3 4) (5 6 7) (8 (9 10) 11)))
-value:    nil
+value:    (1 1 (2) (2) (3 4) (3 4) (5 6 7) (5 6 7) (8 (9 10) 11) (8 (9 10) 11))
 
 testing:  (double-fun '((111 112) (120) nil (140)))
-value:    nil
+value:    ((111 112) (111 112) (120) (120) nil nil (140) (140))
 
 testing:  (double-fun '(((111 112)) ((120)) (nil) (140)))
-value:    nil
+value:    (((111 112)) ((111 112)) ((120)) ((120)) (nil) (nil) (140) (140))
 
 testing:  (double-fun '(1 (2 3) ((((4))))))
-value:    nil
+value:    (1 1 (2 3) (2 3) ((((4)))) ((((4)))))
 
 
                               TEST-A-DOUBLE on:  double-iterative
@@ -96,31 +96,31 @@ testing:  (double-fun 'a)
 value:    nil
 
 testing:  (double-fun '(44))
-value:    nil
+value:    (44 44)
 
 testing:  (double-fun '(44 55))
-value:    nil
+value:    (44 44 55 55)
 
 testing:  (double-fun '(1 2 3))
-value:    nil
+value:    (1 1 2 2 3 3)
 
 testing:  (double-fun '(11 12 13 14))
-value:    nil
+value:    (11 11 12 12 13 13 14 14)
 
 testing:  (double-fun '(1 (2 3) 4))
-value:    nil
+value:    (1 1 (2 3) (2 3) 4 4)
 
 testing:  (double-fun '(1 (2) (3 4) (5 6 7) (8 (9 10) 11)))
-value:    nil
+value:    (1 1 (2) (2) (3 4) (3 4) (5 6 7) (5 6 7) (8 (9 10) 11) (8 (9 10) 11))
 
 testing:  (double-fun '((111 112) (120) nil (140)))
-value:    nil
+value:    ((111 112) (111 112) (120) (120) nil nil (140) (140))
 
 testing:  (double-fun '(((111 112)) ((120)) (nil) (140)))
-value:    nil
+value:    (((111 112)) ((111 112)) ((120)) ((120)) (nil) (nil) (140) (140))
 
 testing:  (double-fun '(1 (2 3) ((((4))))))
-value:    nil
+value:    (1 1 (2 3) (2 3) ((((4)))) ((((4)))))
 
 
                     TEST-RDOUBLE
@@ -129,6 +129,75 @@ value:    nil
                               TEST-A-DOUBLE on:  rdouble
 
 testing:  (double-fun nil)
+value:    nil
+
+testing:  (double-fun 44)
+value:    nil
+
+testing:  (double-fun 'a)
+value:    nil
+
+testing:  (double-fun '(44))
+value:    (44 44)
+
+testing:  (double-fun '(44 55))
+value:    (44 44 55 55)
+
+testing:  (double-fun '(1 2 3))
+value:    (1 1 2 2 3 3)
+
+testing:  (double-fun '(11 12 13 14))
+value:    (11 11 12 12 13 13 14 14)
+
+testing:  (double-fun '(1 (2 3) 4))
+value:    (1 1 (2 2 3 3) 4 4)
+
+testing:  (double-fun '(1 (2) (3 4) (5 6 7) (8 (9 10) 11)))
+value:    (1 1 (2 2) (3 3 4 4) (5 5 6 6 7 7) (8 8 (9 9 10 10) 11 11))
+
+testing:  (double-fun '((111 112) (120) nil (140)))
+value:    ((111 111 112 112) (120 120) nil (140 140))
+
+testing:  (double-fun '(((111 112)) ((120)) (nil) (140)))
+value:    (((111 111 112 112)) ((120 120)) (nil) (140 140))
+
+testing:  (double-fun '(1 (2 3) ((((4))))))
+value:    (1 1 (2 2 3 3) ((((4 4)))))
+
+
+                    TEST-MY-MAPCAR
+
+testing:  (my-mapcar #'+ '(1 2) '(3 4))
+value:    (4 6)
+
+testing:  (my-mapcar #'+ 'nil 'nil)
+value:    nil
+
+testing:  (my-mapcar #'+ '(1 2 3) '(4 5))
+value:    (5 7)
+
+testing:  (my-mapcar #'* '(1 2 3) '(4 5 6 7))
+value:    (4 10 18)
+
+testing:  (my-mapcar #'* 'nil '(4 5 6 7))
+value:    nil
+
+testing:  (my-mapcar #'* '(1 2 3) 'nil)
+value:    nil
+
+testing:  (my-mapcar #'cons '((1) (2 3)) '((a b) (c)))
+value:    (((1) a b) ((2 3) c))
+
+testing:  (my-mapcar #'list '((1) (2 3)) '((a b) (c)))
+value:    (((1) (a b)) ((2 3) (c)))
+
+testing:  (my-mapcar #'(lambda (a b) (+ (* 2 a a) (* b b))) '(1 2 3) '(4 5 6))
+value:    (18 33 54)
+
+
+                    TEST-REWRITE
+
+testing:  (rewrite nil)
 value:    
-*** - funcall: undefined function rdouble
+*** - eval: undefined function rewrite
 

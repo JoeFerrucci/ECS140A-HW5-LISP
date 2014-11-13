@@ -1,5 +1,9 @@
 ; LISP Homework 5 by Joe Ferrucci
 
+
+; =========================
+; ======   PART 1   =======
+; =========================
 ; Recursive
 (defun double-recursive (y)
     (cond
@@ -31,31 +35,55 @@
 )
 
 
-; MapCar
+; MapCar (INVALID)
 (defun double-mapcar (y)
-    (setq new ())
     (cond
         ((listp y)
-            (mapcar
-                (lambda (x)
-                    (setq new (append new (list x) (list x))))
-                y
-            )
+            (apply 'append (mapcar (lambda (x) (cons x (list x))) y))
         )
+        (t nil)
     )
-    new
+)
+
+; =========================
+; ======   PART 2   =======
+; =========================
+(defun rdouble (y)
+    (cond
+        ((null y) nil)
+        ((not (listp y)) nil)
+        ((listp (car y)) (cons (rdouble (car y)) (rdouble (cdr y))))
+        (t (cons (car y) (cons (car y) (rdouble (cdr y)))))
+    )
+)
+
+
+; =========================
+; ======   PART 3   =======
+; =========================
+(defun my-mapcar (fun l1 l2)
+    (cond
+        ((null l1) nil)
+        ((null l2) nil)
+        ((not (listp l1)) nil)
+        ((not (listp l2)) nil)
+        (t (cons (funcall fun (car l1) (car l2)) (my-mapcar fun (cdr l1) (cdr l2))))
+    )
 )
 
 
 
 
+; =========================
+; ======   PART 4   =======
+; =========================
 
-(do 
-    (
-        (i (length x) (- i 1))
-        ; (y 1 (* y 2))
-    )
-    ((< i 1) nil)
-    (print x)
-)
+
+
+
+; =========================
+; ======   PART 5   =======
+; =========================
+
+
 
