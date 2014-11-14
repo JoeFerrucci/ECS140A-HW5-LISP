@@ -71,13 +71,42 @@
     )
 )
 
-
-
-
 ; =========================
 ; ======   PART 4   =======
 ; =========================
-
+(defun rewrite (x)
+    (cond
+        ((null x) nil)
+        ((listp x) 
+            (cond
+                ((eq (car x) 'if) 
+                    (cond
+                        ; is there an else statement? 
+                        ((third (cdr x)) 
+                            ; there is an else, generate new list
+                            (cons 'cond 
+                                    (cons 
+                                        (list (rewrite (second x)) (rewrite (third x)))
+                                        (list (list 't (third (cdr x))))
+                                    )
+                            )
+                        )
+                        (t 
+                            ; there is NOT an else, generate new list
+                            (cons 'cond 
+                                        (list (list (rewrite (second x)) (rewrite (third x))))
+                            )
+                        )
+                    )
+                )
+                (t (cons (rewrite (car x)) (rewrite (cdr x))))
+            )
+        )
+        (t ; if its not a list at all
+            x 
+        )
+    )
+)
 
 
 
