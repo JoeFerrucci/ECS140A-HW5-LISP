@@ -14,6 +14,9 @@ part1: Works on all tests.
 part2: Works on all tests.
 part3: Works on all tests.
 part4: Works on all tests.
-part5: Works on only the first test case.
+part5: Works on all tests.
 
 Overall: Any comment/discussion related to this HW.
+
+
+According to the comments in test.l there should be some noise at the end of testing because of the column width of the terminal. I was told that it was OK to ignore some of this. Other than that everything runs fine.
