@@ -1,4 +1,4 @@
-;; Dribble of #<io terminal-stream> started on 2014-11-13 13:08:23.
+;; Dribble of #<io terminal-stream> started on 2014-11-13 16:08:29.
 
           BEGIN TESTING
 
@@ -198,6 +198,126 @@ value:    (18 33 54)
                     TEST-REWRITE
 
 testing:  (rewrite nil)
-value:    
-*** - eval: undefined function rewrite
+value:    nil
 
+testing:  (rewrite 44)
+value:    44
+
+testing:  (rewrite '(* 44 2))
+value:    (* 44 2)
+
+testing:  (rewrite 'a)
+value:    a
+
+testing:  (rewrite '(list 3 4))
+value:    (list 3 4)
+
+testing:  (rewrite '(if 3 4))
+value:    (cond (3 4))
+
+testing:  (rewrite '(if nil 4))
+value:    (cond (nil 4))
+
+testing:  (rewrite '(if 3 4 5))
+value:    (cond (3 4) (t 5))
+
+testing:  (rewrite '(if (if 3 8 9) 4 5))
+value:    (cond ((cond (3 8) (t 9)) 4) (t 5))
+
+testing:  (rewrite '(if nil 4 5))
+value:    (cond (nil 4) (t 5))
+
+testing:  (rewrite '(* 44 (if 3 2 5)))
+value:    (* 44 (cond (3 2) (t 5)))
+
+testing:  (rewrite '(* 44 (if nil 7 10)))
+value:    (* 44 (cond (nil 7) (t 10)))
+
+testing:  (rewrite '(if (= 8 (if 3 8 9)) 4 5))
+value:    (cond ((= 8 (cond (3 8) (t 9))) 4) (t 5))
+
+testing:  (rewrite '(if (= 8 (if nil 8 9)) 4 5))
+value:    (cond ((= 8 (cond (nil 8) (t 9))) 4) (t 5))
+
+testing:  (rewrite '(if (= 8 (if 3 (if (= 7 7) 8 1) 9)) 4 5))
+value:    (cond ((= 8 (cond (3 (cond ((= 7 7) 8) (t 1))) (t 9))) 4) (t 5))
+
+testing:  (rewrite '(if (= 8 (if 3 (if (= 7 6) 8 (if (+ 1 22) 3 77)) 9)) 5))
+value:    (cond ((= 8 (cond (3 (cond ((= 7 6) 8) (t (if (+ 1 22) 3 77)))) (t 9))) 5))
+
+testing:  (rewrite '(cons (if (= 8 7) 'bad 'good) (if (= 8 7) 'nope 'yup)))
+value:    (cons (cond ((= 8 7) 'bad) (t 'good)) (cond ((= 8 7) 'nope) (t 'yup)))
+
+testing:  (rewrite '(list (if (= 8 7) 'bad) (if (= 8 7) 'nope)))
+value:    (list (cond ((= 8 7) 'bad)) (cond ((= 8 7) 'nope)))
+
+testing:  (rewrite '(list (if (= 8 8) 'yes) (if (= 8 8) 'okay)))
+value:    (list (cond ((= 8 8) 'yes)) (cond ((= 8 8) 'okay)))
+
+testing:  (rewrite '(list (if (= 8 8) 'yes) (if (= 8 7) 'nope)))
+value:    (list (cond ((= 8 8) 'yes)) (cond ((= 8 7) 'nope)))
+
+
+                    TEST-CHECK
+
+testing:  (check nil)
+value:    (t nil nil)
+
+testing:  (check 44)
+value:    (t 44 44)
+
+testing:  (check '(* 44 2))
+value:    (t 88 88)
+
+testing:  (check '(list 3 4))
+value:    (t (3 4) (3 4))
+
+testing:  (check '(if 3 4))
+value:    (t 4 4)
+
+testing:  (check '(if nil 4))
+value:    (t nil nil)
+
+testing:  (check '(if 3 4 5))
+value:    (t 4 4)
+
+testing:  (check '(if (if 3 8 9) 4 5))
+value:    (t 4 4)
+
+testing:  (check '(if nil 4 5))
+value:    (t 5 5)
+
+testing:  (check '(* 44 (if 3 2 5)))
+value:    (t 88 88)
+
+testing:  (check '(* 44 (if nil 7 10)))
+value:    (t 440 440)
+
+testing:  (check '(if (= 8 (if 3 8 9)) 4 5))
+value:    (t 4 4)
+
+testing:  (check '(if (= 8 (if nil 8 9)) 4 5))
+value:    (t 5 5)
+
+testing:  (check '(if (= 8 (if 3 (if (= 7 7) 8 1) 9)) 4 5))
+value:    (t 4 4)
+
+testing:  (check '(if (= 8 (if 3 (if (= 7 6) 8 (if (+ 1 22) 3 77)) 9)) 5))
+value:    (t nil nil)
+
+testing:  (check '(cons (if (= 8 7) 'bad 'good) (if (= 8 7) 'nope 'yup)))
+value:    (t (good . yup) (good . yup))
+
+testing:  (check '(list (if (= 8 7) 'bad) (if (= 8 7) 'nope)))
+value:    (t (nil nil) (nil nil))
+
+testing:  (check '(list (if (= 8 8) 'yes) (if (= 8 8) 'okay)))
+value:    (t (yes okay) (yes okay))
+
+testing:  (check '(list (if (= 8 8) 'yes) (if (= 8 7) 'nope)))
+value:    (t (yes nil) (yes nil))
+
+
+          DONE TESTING
+
+;; Dribble of #<io terminal-stream> finished on 2014-11-13 16:08:29.

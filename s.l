@@ -113,6 +113,15 @@
 ; =========================
 ; ======   PART 5   =======
 ; =========================
-
+(defun check (x)
+    (list
+        (cond
+            ((equal (eval x) (eval (rewrite x))) 't)
+            (t nil)
+        ) 
+        (eval x) 
+        (eval (rewrite x))
+    )
+)
 
 
